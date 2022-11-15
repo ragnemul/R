@@ -45,5 +45,4 @@ draw_2D_confusion_matrix <- function(cm, caption) {
   text(90, 15, round(as.numeric(cm$overall[1]), 3) * 1, cex=1.2)
   text(110, 30, "Valor F1", cex=1.2, font=2)
   text(110, 15, round(as.numeric(cm$byClass[7]), 3) * 1, cex=1.2)
-  
 }
