@@ -5,14 +5,14 @@ library(devtools)
 library(roxygen2)
 library(ROCR)
 
-source_url("https://raw.githubusercontent.com/ragnemul/K-NN/main/Ejercicio_4.2/DrawConfusionMatrix.R")
+source_url("https://raw.githubusercontent.com/ragnemul/R/main/DrawConfusionMatrix.R")
 source ('DrawConfusionMatrix.R')
 
 library(rpart)
 library(rpart.plot)
 
 
-data.df = read.csv("https://raw.githubusercontent.com/ragnemul/K-NN/main/Ejercicio_4.2/IBM-HR-Employee-Attrition.csv")
+data.df = read.csv("https://raw.githubusercontent.com/ragnemul/R/main/IBM-HR-Employee-Attrition.csv")
 data <- subset(data.df, select = -c(EmployeeCount,StandardHours,Over18,EmployeeNumber) )
 
 # eliminamos los valores nulos
