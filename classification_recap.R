@@ -28,6 +28,7 @@ train <- data[train_split_idx, ]
 test <- data[-train_split_idx, ]
 
 
+
 #############################
 # KNN
 
@@ -53,7 +54,7 @@ knn_model <- caret::train(Attrition ~ .,
                          metric = "Sens",    
                          tuneGrid = expand.grid(k = 1:50))
 
-
+# Mostramos la gráfica para eliegir el número de los K venidos 
 plot(knn_model)
 
 # predicción de los datos de test usando el modelo knn_model
