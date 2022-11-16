@@ -49,7 +49,11 @@ NN_tuneGrid = expand.grid(size=seq(from = 1, to = 10, by = 1),
                        decay = seq(from = 0.1, to = 0.5, by = 0.1))
 
 
-NN_model = caret::train(medv ~ ., data = train.data, method = "nnet",
+NN_tuneGrid = expand.grid(layer1=seq(from=1, to=10,by=1),
+                          layer2=seq(from=1, to=10,by=1),
+                          layer3=seq(from=1, to=10,by=1))
+
+NN_model = caret::train(medv ~ ., data = train.data, method = "neuralnet",
                       trControl = NN_control,
                       tuneGrid=NN_tuneGrid)
 
