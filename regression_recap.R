@@ -49,13 +49,21 @@ NN_tuneGrid = expand.grid(size=seq(from = 1, to = 10, by = 1),
                        decay = seq(from = 0.1, to = 0.5, by = 0.1))
 
 
-NN_tuneGrid = expand.grid(layer1=seq(from=1, to=10,by=1),
-                          layer2=seq(from=1, to=10,by=1),
-                          layer3=seq(from=1, to=10,by=1))
+# Con este tunning se consiguen mejores resultados pero el tiempo de entrenamiento es muy largo
+# Cargaremos el modelo obtenido para su visualización posterior
+# NN_tuneGrid = expand.grid(layer1=seq(from=1, to=10,by=1),
+#                           layer2=seq(from=1, to=10,by=1),
+#                           layer3=seq(from=1, to=10,by=1))
 
-NN_model = caret::train(medv ~ ., data = train.data, method = "neuralnet",
-                      trControl = NN_control,
-                      tuneGrid=NN_tuneGrid)
+# NN_model = caret::train(medv ~ ., data = train.data, method = "neuralnet",
+#                       trControl = NN_control,
+#                       tuneGrid=NN_tuneGrid)
+# Salvamos el modelo
+#saveRDS(NN_model,"/Users/luismg/ragnemul@gmail.com - Google Drive/My Drive/Comillas/MABA/R/NN_model.rds")
+
+NN_model = caret::train(medv ~ ., data = train.data, method = "nnet",
+                        trControl = NN_control,
+                        tuneGrid=NN_tuneGrid)
 
 # Plot model error RMSE vs different values of k
 plot(NN_model)
@@ -72,6 +80,24 @@ RMSE(NN_predictions, test.data$medv)
 # NN
 ##########################
 
+##########################
+# NN-2
+
+# cargamos el modelo "pesado"
+NN_model2 <- readRDS("/Users/luismg/ragnemul@gmail.com - Google Drive/My Drive/Comillas/MABA/R/NN_model.rds")
+
+# Best tuning parameter k that minimize the RMSE
+NN_model2$bestTune
+
+# Make predictions on the test data
+NN_predictions2 <- predict(NN_model2,test.data)
+head(NN_predictions2)
+
+# Compute the prediction error RMSE
+RMSE(NN_predictions2, test.data$medv)
+
+# NN-2
+##########################
 
 
 # plots real vs predicted values
@@ -81,9 +107,10 @@ plot(x, test.data$medv, col = "red", type = "l", lwd=2,
 
 lines(x, KNN_predictions, col = "blue", lwd=2)
 lines(x, NN_predictions, col = "green", lwd=2)
+lines(x, NN_predictions2, col = "black", lwd=2)
 
-legend("topright",  legend = c("original", "predicted-KNN", "predicted-NN"), 
-       fill = c("red", "blue","green"), col = 2:3,  adj = c(0, 0.6))
+legend("topright",  legend = c("original", "predicted-KNN", "predicted-NN", "predicted-NN2"), 
+       fill = c("red", "blue","green","black"), col = 2:3,  adj = c(0, 0.6))
 grid() 
 
 
